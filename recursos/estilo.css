@@ -1,0 +1,67 @@
+/* .botao{
+    border: 1px solid rgb(165, 1, 194);
+}
+.botao:hover{
+    background-color: blueviolet;
+} */
+
+
+.painel{
+    box-shadow: 2px 2px 10px;
+    background-color: white;
+    width: 350px;
+    margin: auto;
+    padding: 30px;
+    margin-top: 100px;
+    border-radius: 20px;
+
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%, -50%);
+    
+}
+
+.cabecalhoLogin{
+    color: rgb(45, 55, 105);
+    text-align: center;
+    font-size: 40px;
+}
+
+.barranav{
+    background: linear-gradient(to right, rgb(0, 0, 0), rgb(4, 4, 96)) !important;    
+}
+
+.menu{
+    background-color: rgb(50, 51, 67);
+    height: 100vh; /* altura máxima da tela */
+    list-style: none;
+}
+.menu-item{
+    display: block;
+    color: white;
+    padding: 8px 0px;
+    font-size: 22px;
+}
+
+.menu-item:hover{
+    text-decoration: none;
+    color: aqua;
+    transition: 1s;
+}
+
+@media(max-width: 768px){
+    .menu{
+        display: none;
+    }
+}
+
+
+.tabela{
+    border: 1px solid red !important;
+}
+
+.card{
+    margin: 5px;
+}
