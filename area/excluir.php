@@ -4,10 +4,10 @@
 
     $id = $_REQUEST['id'];
 
-    $sql = "DELETE FROM funcionario WHERE id='$id' ";
+    $sql = "DELETE FROM area WHERE id='$id' ";
 
     $resultado = mysqli_query($conexao, $sql);
 
-    header("Location:../funcionario.php");
+    header("Location:../area.php");
 
 ?>

@@ -6,12 +6,12 @@ include "validacao.php";
 include "conexao.php";
 
 //destino do formulário
-$destino = './cidade/inserir.php';
+$destino = './regiao/inserir.php';
 
 //se veriavel idAlt for diferente de vazio na url - se existir a variavel idAlt na URL
 if (!empty($_GET['idAlt'])) {
   $id = $_GET['idAlt'];
-  $sql = "SELECT * FROM cidade WHERE id='$id' ";
+  $sql = "SELECT * FROM regiao WHERE id='$id' ";
 
   //busca os o usuário para editar de acordo com o id
   $dados = mysqli_query($conexao, $sql);
@@ -20,7 +20,7 @@ if (!empty($_GET['idAlt'])) {
   $dadosAlt = mysqli_fetch_assoc($dados);
 
   //nesse caso o formulario vai enviar os dados para o alterar.php
-  $destino = './cidade/alterar.php';
+  $destino = './regiao/alterar.php';
 
 }
 
@@ -70,38 +70,10 @@ if (!empty($_GET['idAlt'])) {
               <div class="form-group">
                 <label>Nome: </label>
                 <input required value="<?php echo isset($dadosAlt) ? $dadosAlt['nome'] : '' ?>" type="text" name="nome"
-                  class="form-control" placeholder="Nome da Cidade">
+                  class="form-control" placeholder="Nome da regiao">
               </div>
 
-              <div class="form-group">
-                <label>Cep: </label>
-                <input value="<?php echo isset($dadosAlt) ? $dadosAlt['cep'] : '' ?>" type="text" name="cep"
-                  class="form-control cep" placeholder="CEP">
-              </div>
-
-              <div class="form-group">
-                <label>Estado</label>
-                <input value="<?php echo isset($dadosAlt) ? $dadosAlt['estado'] : '' ?>" type="text" name="estado"
-                  class="form-control" placeholder="Estado">
-              </div>
-
-           <div class="form-group">
-            <label>Região</label>
-            <select name="regiao_id" class="form-control" required>
-              <option value="">Selecione a Região</option>
-              <?php
-              $sqlRegiao = "SELECT * FROM regiao ORDER BY nome";
-              $resultadoRegiao = mysqli_query($conexao, $sqlRegiao);
-              $regiaoSelecionada = isset($dadosAlt) ? $dadosAlt['regiao_id'] : '';
-
-              while ($reg = mysqli_fetch_assoc($resultadoRegiao)) {
-                $selected = ($reg['id'] == $regiaoSelecionada) ? 'selected' : '';
-                echo "<option value='{$reg['id']}' $selected>{$reg['nome']}</option>";
-              }
-              ?>
-            </select>
-          </div>
-
+            
 
               <button type="submit" class="btn btn-primary"> Salvar </button>
             </form>
@@ -110,45 +82,35 @@ if (!empty($_GET['idAlt'])) {
 
           <div class="col-md-7 card"> Listagem
 
-            <?php
-$sql = "SELECT cidade.*, regiao.nome AS regiao_nome 
-        FROM cidade 
-        LEFT JOIN regiao ON cidade.regiao_id = regiao.id";
-
-$resultado = mysqli_query($conexao, $sql);
-?>
-
-<table class="table table-striped table-bordered" id="tabela">
-  <thead>
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">nome</th>
-      <th scope="col">cep</th>
-      <th scope="col">estado</th>
-      <th scope="col">região</th>
-      <th scope="col">opções</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php while ($colunas = mysqli_fetch_assoc($resultado)) { ?>
-      <tr>
-        <th scope="row"> <?php echo $colunas['id'] ?> </th>
-        <td> <?php echo $colunas['nome'] ?> </td>
-        <td> <?php echo $colunas['cep'] ?> </td>
-        <td> <?php echo $colunas['estado'] ?> </td>
-        <td> <?php echo $colunas['regiao_nome'] ?> </td>
-        <td>
-          <a href="cidade.php?idAlt=<?= $colunas['id'] ?>">
-            <i class="fa-solid fa-pen-to-square mr-3"></i>
-          </a>
-          <a href="<?php echo './cidade/excluir.php?id=' . $colunas['id']; ?>">
-            <i class="fa-solid fa-trash-can" style="color:red"></i>
-          </a>
-        </td>
-      </tr>
-    <?php } ?>
-  </tbody>
-</table>
+            <table class="table table-striped table-bordered " id="tabela">
+              <thead>
+                <tr>
+                  <th scope="col"> id</th>
+                  <th scope="col"> nome </th>
+                  <th scope="col"> opções </th>
+         
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $sql = 'SELECT * FROM regiao';
+                $resultado = mysqli_query($conexao, $sql);
+                //looping que vai imprimir cada pessoa na tabela
+                while ($colunas = mysqli_fetch_assoc($resultado)) {
+                  ?>
+                  <tr>
+                    <th scope="row"> <?php echo $colunas['id'] ?> </th>
+                    <td> <?php echo $colunas['nome'] ?> </td>
+                    <td>
+                      <a href="regiao.php?idAlt=<?= $colunas['id'] ?>"> <i class="fa-solid fa-pen-to-square mr-3"></i>
+                      </a>
+                      <a href="<?php echo './regiao/excluir.php?id=' . $colunas['id']; ?>"> <i
+                          class="fa-solid fa-trash-can" style="color:red"></i></a>
+                    </td>
+                  </tr>
+                <?php } ?>
+              </tbody>
+            </table>
           </div>
 
         </div>
